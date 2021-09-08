@@ -1,8 +1,10 @@
 package pageObjects;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -39,6 +41,24 @@ public class ResearchPage {
     @FindBy(xpath = "//input[@type=\"radio\"]")
     private List<WebElement> ageOptions;
 
+    @FindBy(xpath = "//label[contains(text(),\"Com quais tipos de testes\")]/..//input")
+    private List<WebElement> automatedTestsOptions;
+
+    @FindBy(xpath = "//input[@placeholder=\"Ex.: Java, JavaScript, Python ...\"]")
+    private WebElement knownTechnologies;
+
+    @FindBy(xpath = "//label[contains(text(),\"De 1 a 10 como você avalia\")]")
+    private WebElement expertiseReating;
+
+    @FindBy(xpath = "//input[@type=\"range\"]")
+    private WebElement expertiseReatingSlider;
+
+    @FindBy(xpath = "//button[@type=\"submit\"]")
+    private WebElement submitButton;
+
+    @FindBy(xpath = "//p")
+    private WebElement feedbackMessage;
+
     public ResearchPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -72,8 +92,35 @@ public class ResearchPage {
     }
 
     public void setExperienceTime(double option){
+        //Scroll until the web element
         js.executeScript("arguments[0].scrollIntoView();", experienceTimeFiled);
         experienceTimeFiled.click();
         experienceTimeOptions.get((int) option).click();
     }
+
+    public void setAutomatedTestsOptions(double optionOne, double optionTwo){
+        js.executeScript("arguments[0].scrollIntoView();", automatedTestsOptions.get((int)optionOne));
+        automatedTestsOptions.get((int)optionOne).click();
+        automatedTestsOptions.get((int)optionTwo).click();
+    }
+
+    public void setKnownTechnologies(String technologies){
+        knownTechnologies.sendKeys(technologies);
+    }
+
+    public void setExpertiseReating(double reate){
+        int width = expertiseReatingSlider.getSize().getWidth();
+        Actions move = new Actions(driver);
+        move.moveToElement(expertiseReatingSlider, ((width*(int)reate)/100), 0).click();
+        move.build().perform();
+    }
+
+    public void clickSubmitButton(){
+        submitButton.click();
+    }
+
+    public String getFeedbackMessage(){
+        return feedbackMessage.getText();
+    }
+
 }

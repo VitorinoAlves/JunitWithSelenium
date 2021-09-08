@@ -47,6 +47,11 @@ public class DemoTest {
         researchPage.setPhoneNumber(faker.numerify("(###)###-###-###"));
         researchPage.setAge((Math.random() * (4 - 0)) + 0);
         researchPage.setExperienceTime((Math.random() * (3 - 1) + 1));
+        researchPage.setAutomatedTestsOptions((Math.random() * (4 - 0) + 0), (Math.random() * (4 - 0) + 0));
+        researchPage.setKnownTechnologies(faker.letterify("??????????, ??????????, ???????????"));
+        researchPage.setExpertiseReating((Math.random() * (9 - 0) + 0));
+        researchPage.clickSubmitButton();
+        Assertions.assertEquals("Obrigado por responder nossa pesquisa. Agradecemos sua participação!", researchPage.getFeedbackMessage());
         Thread.sleep(2000);
     }
 
