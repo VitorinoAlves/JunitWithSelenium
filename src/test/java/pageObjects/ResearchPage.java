@@ -59,6 +59,9 @@ public class ResearchPage {
     @FindBy(xpath = "//p")
     private WebElement feedbackMessage;
 
+    @FindBy(xpath = "//label[@class=\"wpforms-error\"]")
+    private WebElement errorMessage;
+
     public ResearchPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -121,6 +124,10 @@ public class ResearchPage {
 
     public String getFeedbackMessage(){
         return feedbackMessage.getText();
+    }
+
+    public String getErrorMessage(){
+        return errorMessage.getText();
     }
 
 }

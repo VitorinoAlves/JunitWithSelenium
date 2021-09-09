@@ -8,10 +8,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import pageObjects.HomePage;
 import pageObjects.ResearchPage;
+import utilities.RandomData;
 
 import java.util.Locale;
 
@@ -45,11 +45,11 @@ public class DemoTest {
         researchPage.setEmail(email);
         researchPage.setConfirmEmail(email);
         researchPage.setPhoneNumber(faker.numerify("(###)###-###-###"));
-        researchPage.setAge((Math.random() * (4 - 0)) + 0);
-        researchPage.setExperienceTime((Math.random() * (3 - 1) + 1));
-        researchPage.setAutomatedTestsOptions((Math.random() * (4 - 0) + 0), (Math.random() * (4 - 0) + 0));
+        researchPage.setAge(RandomData.randomNumber(4,0));
+        researchPage.setExperienceTime(RandomData.randomNumber(3,1));
+        researchPage.setAutomatedTestsOptions(RandomData.randomNumber(4,0), RandomData.randomNumber(4,0));
         researchPage.setKnownTechnologies(faker.letterify("??????????, ??????????, ???????????"));
-        researchPage.setExpertiseReating((Math.random() * (9 - 0) + 0));
+        researchPage.setExpertiseReating(RandomData.randomNumber(9,0));
         researchPage.clickSubmitButton();
         Assertions.assertEquals("Obrigado por responder nossa pesquisa. Agradecemos sua participação!", researchPage.getFeedbackMessage());
         Thread.sleep(2000);
